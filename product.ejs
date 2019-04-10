@@ -1,0 +1,17 @@
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myobj = [
+    { product_id: '1', product_name: 'cherry', product_disc:'good for health',P_price:'12'},
+    { product_id: '2', product_name: 'Apple', product_disc:'good for health',P_price:'13'},
+    { product_id: '3', product_name: 'carrot', product_disc:'good for health',P_price:'14'},
+    { product_id: '4', product_name: 'peanut', product_disc:'good for health',P_price:'15'}
+  ];
+  dbo.collection("products").insertMany(myobj, function(err, res) {
+    console.log("Number of documents inserted: " + res.insertedCount);
+    db.close();
+  });
+});
